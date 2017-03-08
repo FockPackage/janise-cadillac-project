@@ -1,0 +1,453 @@
+swagger: '2.0'
+info:
+  version: 1.0.1
+  title: 凯迪拉克 api
+  description: |
+    **凯迪拉克api**
+
+    前端 价格模块 api
+
+host: '192.168.0.172:3001'
+basePath: /api/v2/price
+tags:
+  - name: car
+    description: 车辆相关
+  - name: fit
+    description: 配件相关
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+security:
+  - jwt: []
+paths:
+# 查询车辆入库信息
+  /getCarChanged:
+    get:
+      tags:
+        - car
+      security:
+        - jwt: []
+      parameters:
+        - name: limit
+          in: query
+          description: limit
+          type: integer
+          format: int32
+        - name: offset
+          in: query
+          description: offset
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: 查询所有被改动的车辆库存信息
+          schema:
+            title: responses
+            type: object
+            items:
+              $ref: '#/definitions/RespCarWarehouse'
+  /updateCarSelingPrice/{id}:
+    put:
+      tags:
+        - car
+      security:
+        - jwt: []
+      parameters:
+        - name: id
+          in: path
+          description: carWarehouseId
+          type: string
+          required: true
+        - name: carWarehouse
+          in: body
+          description: 更新入库车辆相关价格
+          schema:
+            $ref: '#/definitions/UpdateCarSelingPrice'
+      responses:
+        '200':
+          description: 更新成功
+          schema:
+            title: responses
+            type: object
+            items:
+              $ref: '#/definitions/Resp'
+  /updateCarConfig/{id}:
+    put:
+      tags:
+        - car
+      security:
+        - jwt: []
+      parameters:
+        - name: id
+          in: path
+          description: carWarehouseId
+          type: string
+          required: true
+        - name: carWarehouse
+          in: body
+          description: 更新入库车辆相关信息
+          schema:
+            $ref: '#/definitions/UpdateCarConfig'
+      responses:
+        '200':
+          description: 更新成功
+          schema:
+            title: responses
+            type: object
+            items:
+              $ref: '#/definitions/Resp'
+
+  /getFitChanged:
+    get:
+      tags:
+        - fit
+      security:
+        - jwt: []
+      parameters:
+        - name: limit
+          in: query
+          description: limit
+          type: integer
+          format: int32
+        - name: offset
+          in: query
+          description: offset
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: 查询所有被改动的配件库存信息
+          schema:
+            title: responses
+            type: object
+            items:
+              $ref: '#/definitions/RespFitWarehouse'
+  /updateFitSelingPric/{id}:
+    put:
+      tags:
+        - fit
+      security:
+        - jwt: []
+      parameters:
+        - name: id
+          in: path
+          description: fitWarehouseId
+          type: string
+          required: true
+        - name: carWarehouse
+          in: body
+          description: 更新入库配件价格信息
+          schema:
+            $ref: '#/definitions/UpdateFitSelingPric'
+      responses:
+        '200':
+          description: 更新成功
+          schema:
+            title: responses
+            type: object
+            items:
+              $ref: '#/definitions/Resp'
+  /updateFitConfig/{id}:
+    put:
+      tags:
+        - fit
+      security:
+        - jwt: []
+      parameters:
+        - name: id
+          in: path
+          description: carWarehouseId
+          type: string
+          required: true
+        - name: carWarehouse
+          in: body
+          description: 更新入库配件相关信息
+          schema:
+            $ref: '#/definitions/UpdateFitConfig'
+      responses:
+        '200':
+          description: 更新成功
+          schema:
+            title: responses
+            type: object
+            items:
+              $ref: '#/definitions/Resp'
+# 安全认证定义
+securityDefinitions:
+  jwt:
+    type: apiKey
+    in: header
+    name: Authorization
+
+# model 定义
+definitions:
+  CarWarehouse:
+    type: object
+    description: 车辆库存
+    properties:
+      id:
+        type: string
+      carIdentify:
+        type: string
+      carSalesClassId:
+        type: string
+      carPrice1:
+        type: number
+        format: float
+      carPrice2:
+        type: number
+        format: float
+      carPrice3:
+        type: number
+        format: float
+      closeStatus:
+        type: boolean
+      stockStatus:
+        type: boolean
+      isPromotion:
+        type: boolean
+      promotionPrice:
+        type: number
+        format: float
+      promotionComm:
+        type: number
+        format: float
+      imgSrcs:
+        type: string
+      description:
+        type: string
+  RespCarWarehouse:
+    type: object
+    description: 查询成功
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      rows:
+        $ref: '#/definitions/CarWarehouse'
+      count:
+        type: integer
+        format: int32
+
+# 更新车辆价格
+  UpdateCarSelingPrice:
+    type: object
+    description:  更新车辆价格
+    properties:
+      carSalesClassId:
+        type: string
+      carPrice1:
+        type: string
+      carPrice3:
+        type: string
+# 更新车辆配置
+  UpdateCarConfig:
+    type: object
+    description:  更新车辆配置
+    properties:
+      carIdentify:
+        type: string
+      carRelationId:
+        type: string
+      carSalesClassId:
+        type: string
+      closeStatus:
+        type: boolean
+      stockStatus:
+        type: boolean
+      imgSrcs:
+        type: string
+      description:
+        type: string
+
+# 配件库存
+  FitWarehouse:
+    type: object
+    description:  配件配置
+    properties:
+      id:
+        type: string
+      fitCode:
+        type: string
+      batchNo:
+        type: string
+      batchName:
+        type: boolean
+      stockNumber:
+        type: boolean
+      salePrice:
+        type: number
+        format: float
+      closeStatus:
+        type: boolean
+      marketability:
+        type: boolean
+      imgSrcs:
+        type: string
+      description:
+        type: string
+      fitType:
+        type: stirng
+      isChanged:
+        type: boolean
+      isOfficial:
+        type: boolean
+  RespFitWarehouse:
+    type: object
+    description: 查询成功
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      rows:
+        $ref: '#/definitions/FitWarehouse'
+      count:
+        type: integer
+        format: int32
+  UpdateFitSelingPric:
+    type: object
+    description: 更新配件价格
+    properties:
+      salePrice:
+        type: number
+        format: float
+  UpdateFitConfig:
+    type: object
+    description: 更新配件配置
+    properties:
+      fitCode:
+        type: string
+      stockNumber:
+        type: string
+      fitType:
+        type: string
+      isOfficial:
+        type: boolean
+      closeStatus:
+        type: boolean
+      marketability:
+        type: boolean
+      imgSrcs:
+        type: string
+      description:
+        type: string
+
+
+
+
+
+
+#   # 订单
+#   Order:
+#     type: object
+#     description: 订单
+#     properties:
+#       id:
+#         type: string
+#       orderCode:
+#         type: string
+#       carIndentify:
+#         type: string
+#       customId:
+#         type: string
+#       custom:
+#         $ref: '#/definitions/Custom'
+#       carPrice:
+#         type: number
+#         format: float
+#       fitPrice:
+#         type: number
+#         format: float
+#       isInsurance:
+#         type: boolean
+#       insurancePrice:
+#         type: number
+#         format: float
+#       isLoanPrice:
+#         type: boolean
+#       loanPrice:
+#         type: number
+#         format: float
+#       outStockFee:
+#         type: number
+#         format: float
+#       manangerId:
+#         type: string
+#       saleId:
+#         type: string
+#       description:
+#         type: string
+#   RespOrder:
+#     type: object
+#     description: 返回
+#     properties:
+#       code:
+#         type: integer
+#         format: int32
+#       message:
+#         type: string
+#       rows:
+#         $ref: '#/definitions/Order'
+#       count:
+#         type: integer
+#         format: int32
+# # 订单明细
+#   OrderItem:
+#     type: object
+#     description: 订单明细
+#     properties:
+#       id:
+#         type: string
+#       orderId:
+#         type: string
+#       carWarehouseId:
+#         type: string
+#       fitWarehouseId:
+#         type: string
+#       itemName:
+#         type: string
+#       itemMean:
+#         type: string
+#       itemType:
+#         type: string
+#       itemNumber:
+#         type: string
+#       salePrice:
+#         type: string
+#       batchNo:
+#         type: string
+#       itemStatus:
+#         type: string
+#       description:
+#         type: string
+#   RespOrderItem:
+#     type: object
+#     description: 查询成功
+#     properties:
+#       code:
+#         type: integer
+#         format: int32
+#       message:
+#         type: string
+#       rows:
+#         $ref: '#/definitions/OrderItem'
+#       count:
+#         type: integer
+#         format: int32
+# 操作成功
+  Resp:
+    type: object
+    description: 操作成功
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string

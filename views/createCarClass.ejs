@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <!-- 新 Bootstrap 核心 CSS 文件 -->
+  <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+
+  <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+  <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
+
+  <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+  <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+
+  <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+  <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="container-fluid">
+
+    <!--创建-->
+    <div class="row">
+      <div class="col-md-12">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>车型</th>
+              <th>年份</th>
+              <th>排量</th>
+              <th>配置</th>
+              <th>车身颜色</th>
+              <th>内饰颜色</th>
+              <th>轮毂</th>
+              <th>指导价</th>
+              <th>提交</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="min-width: 90px">
+<div class="form-group">
+  <select class="form-control" size=12 multiple="multiple" name="carType" id="carType"></select>
+</div>
+</td>
+<td style="min-width: 90px">
+<div class="form-group">
+  <select class="form-control" size=12 multiple="multiple" name="year" id="year"></select>
+</div>
+</td>
+<td>
+  <div class="form-group">
+    <select class="form-control" size=12 multiple="multiple" name="displace" id="displace"></select>
+  </div>
+</td>
+<td>
+  <div class="form-group">
+    <select class="form-control" size=12 multiple="multiple" name="carConfig" id="carConfig"></select>
+  </div>
+</td>
+<td>
+  <div style="min-width: 90px" class="form-group">
+<select class="form-control" size=12 multiple="multiple" name="outsideColor" id="outsideColor"></select>
+</div>
+</td>
+<td>
+  <div class="form-group">
+    <select class="form-control" size=12 multiple="multiple" name="insideColor" id="insideColor"></select>
+  </div>
+</td>
+<td>
+  <div class="form-group">
+    <select class="form-control" size=12 multiple="multiple" name="hub" id="hub"></select>
+  </div>
+</td>
+<td>
+  <div class="form-group">
+    <input id="price" type="text" class="form-control">
+  </div>
+</td>>
+<td style="min-width: 80px">
+<div class="form-group">
+  <button type="text" id="submit" class="button form-control">提交</button>
+</div>
+</td>>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<!--编辑-->
+<div class="row">
+  <div class="col-md-12">
+    <form class="form" role="form">
+      <div class="form-group">
+        <label for="carTypeUp">车型
+              <select class="form-control" name="carTypeUp" id="carTypeUp"></select>
+            </label>
+      </div>
+      <div class="form-group">
+        <label for="yearUp">年份
+              <select class="form-control" name="yearUp" id="yearUp"></select>
+            </label>
+      </div>
+      <!--<div class="form-group">
+            <label for="displaceUp">排量
+              <select class="form-control" name="displaceUp" id="displaceUp"></select>
+            </label>
+          </div>-->
+      <div class="form-group">
+        <label for="carConfigUp">配置
+              <select class="form-control" name="carConfigUp" id="carConfigUp"></select>
+            </label>
+      </div>
+      <div class="form-group">
+        <label for="carSummary3Up">carSummary3
+              <input type="text" id="carSummary3Up">
+              <!--<select class="form-control" name="carSummary3Up" id="carSummary3Up"></select>-->
+            </label>
+      </div>
+      <!--<div class="form-group">
+            <label for="outsideColorS">车身颜色
+              <select class="form-control" name="outsideColorS" id="outsideColorS"></select>
+            </label>
+          </div>-->
+
+      <div class="form-group">
+        <label for="update"></label>
+        <button id="update" type="button" class="form-control">更新</button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+
+
+
+
+
+
+<!--查询-->
+
+<div class="row">
+  <div class="col-md-12">
+    <form class="form-inline" role="form">
+      <div class="form-group">
+        <label for="carTypeS">车型
+              <select class="form-control" name="carTypeS" id="carTypeS"></select>
+            </label>
+      </div>
+      <div class="form-group">
+        <label for="yearS">年份
+              <select class="form-control" name="yearS" id="yearS"></select>
+            </label>
+      </div>
+      <div class="form-group">
+        <label for="displaceS">排量
+              <select class="form-control" name="displaceS" id="displaceS"></select>
+            </label>
+      </div>
+      <div class="form-group">
+        <label for="carConfigS">配置
+              <select class="form-control" name="carConfigS" id="carConfigS"></select>
+            </label>
+      </div>
+      <div class="form-group">
+        <label for="outsideColorS">车身颜色
+              <select class="form-control" name="outsideColorS" id="outsideColorS"></select>
+            </label>
+      </div>
+      <div class="form-group">
+        <label for="fiterS"></label>
+        <button id="fiterS" type="button" class="form-control">筛选</button>
+      </div>
+
+    </form>
+  </div>
+
+  <div class="col-md-12">
+    <table class="table table-condensed">
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>车型</th>
+          <th>年份</th>
+          <th>排量</th>
+          <th>配置</th>
+          <th>车身颜色</th>
+          <th>内饰颜色</th>
+          <th>轮毂</th>
+          <th>指导价</th>
+          <th>carSummary3</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody id="carRelationList">
+
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+<!--<div>
+    <label for="price">指导价</label>
+    <input id="price" type="text">
+    <button id="submit">提交</button>
+  </div>-->
+<!--<script src="js/jquery-3.1.1.min.js"></script>-->
+<script src="js/createCarClass.js"></script>
+</body>
+
+</html>

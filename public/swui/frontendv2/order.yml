@@ -1,0 +1,376 @@
+swagger: '2.0'
+info:
+  version: 1.0.1
+  title: 凯迪拉克 api
+  description: |
+    **凯迪拉克api**
+
+    前端 订单模块 api
+
+host: '127.0.0.1:3001'
+basePath: /api/v2/order
+tags:
+  - name: order
+    description: 订单
+  - name: orderItem
+    description: 订单详情
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+security:
+  - jwt: []
+paths:
+# 查询订单
+  /getOrder:
+    get:
+      tags:
+        - order
+      security:
+        - jwt: []
+      parameters:
+        - name: limit
+          in: query
+          description: limit
+          type: integer
+          format: int32
+        - name: offset
+          in: query
+          description: offset
+          type: integer
+          format: int32
+        - name: carRelationId
+          in: query
+          description: 车型配置...id
+          type: string
+        - name: carType
+          in: query
+          description: 车型
+          type: string
+        - name: orderCode
+          in: query
+          description: 订单编号
+          type: string
+        - name: customName
+          in: query
+          description: 客户姓名
+          type: string
+        - name: mobile
+          in: query
+          description: 客户电话
+          type: string
+        - name: date
+          in: query
+          description: '时间: YYYY-MM-DD / 时间范围: YYYY-MM-DD,YYYY-MM-DD'
+          type: string
+      responses:
+        '200':
+          description: 查询所有订单
+          schema:
+            title: responses
+            type: object
+            items:
+              $ref: '#/definitions/RespOrder'
+  # 创建订单
+  /postOrder:
+    post:
+      tags:
+        - order
+      security:
+        - jwt: []
+      parameters:
+        - name: order
+          in: body
+          description: 订单
+          schema:
+            $ref: '#/definitions/Order'
+      responses:
+        '200':
+          description: 创建订单成功
+          schema:
+            $ref: '#/definitions/Resp'
+
+  # 根据id更新订单
+  /updateOrder/{id}:
+    put:
+      tags:
+        - order
+      security:
+        - jwt: []
+      parameters:
+        - name: orderItemId
+          in: path
+          description: 订单id
+          type: string
+          required: true
+        - name: order
+          in: body
+          description: 订单
+          schema:
+            $ref: '#/definitions/Order'
+      responses:
+        '200':
+          description: 更新订单成功
+          schema:
+            $ref: '#/definitions/Resp'
+
+  # 根据id删除订单
+  /deleteOrder/{id}:
+    delete:
+      tags:
+        - order
+      security:
+        - jwt: []
+      parameters:
+        - name: id
+          in: path
+          description: 订单id
+          type: string
+          required: true
+      responses:
+        '200':
+          description: 删除订单成功
+          schema:
+            $ref: '#/definitions/Resp'
+
+  # 根据id查询订单明细表
+  /getOrderItem/{id}:
+    get:
+      tags:
+        - orderItem
+      security:
+        - jwt: []
+      parameters:
+        - name: id
+          in: path
+          description: 订单详情id
+          type: string
+          required: true
+      responses:
+        '200':
+          description: 查询单条订单详情
+          schema:
+            $ref: '#/definitions/RespOrderItem'
+# 根据id删除订单明细
+  /deleteOrderItem/{id}:
+    delete:
+      tags:
+        - orderItem
+      security:
+        - jwt: []
+      parameters:
+        - name: id
+          in: path
+          description: 订单详情id
+          type: string
+          required: true
+      responses:
+        '200':
+          description: 删除单条订单详情
+          schema:
+            $ref: '#/definitions/RespOrderItem'
+
+  # 新建订单详情表
+  /postOrderItem:
+    post:
+      tags:
+        - orderItem
+      security:
+        - jwt: []
+      parameters:
+        - name: orderItems
+          in: body
+          description: 订单详情表
+          required: true
+          schema:
+            $ref: "#/definitions/PostOrderItem"
+      responses:
+        '200':
+          description: 创建订单详情成功
+          schema:
+            $ref: '#/definitions/Resp'
+
+  # 根据id更新订单详情表
+  /updateOrderItem/{id}:
+    put:
+      tags:
+        - orderItem
+      security:
+        - jwt: []
+      parameters:
+        - name: id
+          in: path
+          description: 单个订单详情id
+          type: string
+          required: true
+        - name: orderItem
+          in: body
+          description: 单个订单详情
+          schema:
+            $ref: '#/definitions/OrderItem'
+      responses:
+        '200':
+          description: 创建订单详情成功
+          schema:
+            $ref: '#/definitions/Resp'
+
+# 安全认证定义
+securityDefinitions:
+  jwt:
+    type: apiKey
+    in: header
+    name: Authorization
+
+# model 定义
+definitions:
+# 客户信息
+  Custom:
+    type: object
+    required:
+      - customName
+      - mobile
+    properties:
+      id:
+        type: string
+      customName:
+        type: string
+      age:
+        type: integer
+        format: int32
+      sex:
+        type: string
+      address:
+        type: string
+      education:
+        type: string
+      IDNumber:
+        type: string
+      marriage:
+        type: string
+      birthday:
+        type: string
+      mobile:
+        type: string
+      weixin:
+        type: string
+      email:
+        type: string
+      isSendMail:
+        type: boolean
+      description:
+        type: string
+  # 订单
+  Order:
+    type: object
+    description: 订单
+    properties:
+      id:
+        type: string
+      orderCode:
+        type: string
+      carIndentify:
+        type: string
+      customId:
+        type: string
+      # custom:
+      #   $ref: '#/definitions/Custom'
+      carPrice:
+        type: number
+        format: float
+      fitPrice:
+        type: number
+        format: float
+      isInsurance:
+        type: boolean
+      insurancePrice:
+        type: number
+        format: float
+      isLoanPrice:
+        type: boolean
+      loanPrice:
+        type: number
+        format: float
+      outStockFee:
+        type: number
+        format: float
+      manangerId:
+        type: string
+      saleId:
+        type: string
+      description:
+        type: string
+  RespOrder:
+    type: object
+    description: 返回
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      rows:
+        $ref: '#/definitions/Order'
+      count:
+        type: integer
+        format: int32
+# 订单明细
+  OrderItem:
+    type: object
+    description: 订单明细
+    properties:
+      orderId:
+        type: string
+      carWarehouseId:
+        type: string
+      fitWarehouseId:
+        type: string
+      itemName:
+        type: string
+      itemMean:
+        type: string
+      itemType:
+        type: string
+      itemNumber:
+        type: string
+      salePrice:
+        type: string
+      batchNo:
+        type: string
+      itemStatus:
+        type: string
+      description:
+        type: string
+  PostOrderItem:
+    type: object
+    description: 提交订单明细列表
+    properties:
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/OrderItem'
+  RespOrderItem:
+    type: object
+    description: 查询成功
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      rows:
+        $ref: '#/definitions/OrderItem'
+      count:
+        type: integer
+        format: int32
+# 操作成功
+  Resp:
+    type: object
+    description: 操作成功
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string

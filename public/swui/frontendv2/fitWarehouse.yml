@@ -1,0 +1,234 @@
+swagger: '2.0'
+info:
+  version: 1.0.1
+  title: 凯迪拉克 api
+  description: |
+    **凯迪拉克api**
+
+    前端 配件入库模块 api
+
+host: '192.168.0.172:3001'
+basePath: /api/v2/fitWarehouse
+tags:
+  - name: fitWarehouse
+    description: 入库
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+security:
+  - jwt: []
+paths:
+# 查询入库信息
+  /getFitWarehouse:
+    get:
+      tags:
+        - fitWarehouse
+      security:
+        - jwt: []
+      parameters:
+        - name: limit
+          in: query
+          description: limit
+          type: integer
+          format: int32
+        - name: offset
+          in: query
+          description: offset
+          type: integer
+          format: int32
+        - name: fitCode
+          in: query
+          description: 配件代码
+          type: string
+        - name: fitName
+          in: query
+          description: 配件名称
+          type: string
+        - name: batchNo
+          in: query
+          description: 批次编号
+          type: string
+        - name: fitType
+          in: query
+          description: 配件类型
+          type: string
+        - name: date
+          in: query
+          description: '时间: YYYY-MM-DD / 时间范围: YYYY-MM-DD,YYYY-MM-DD'
+          type: string
+      responses:
+        '200':
+          description: 查询所有车辆库存信息
+          schema:
+            title: responses
+            type: object
+            items:
+              $ref: '#/definitions/RespFitWarehouse'
+  /postFitWarehouse:
+    post:
+      tags:
+        - fitWarehouse
+      security:
+        - jwt: []
+      parameters:
+        - name: fitWarehouse
+          in: body
+          description: 配件入库信息
+          schema:
+            $ref: '#/definitions/PostFitWarehouse'
+      responses:
+        '200':
+          description: 配件入库成功
+          schema:
+            $ref: '#/definitions/Resp'
+
+  /updateFitWarehouse/{id}:
+    put:
+      tags:
+        - fitWarehouse
+      security:
+        - jwt: []
+      parameters:
+        - name: id
+          in: path
+          description: fitWarehouseId
+          type: string
+          required: true
+        - name: fitWarehouse
+          in: body
+          description: 配件入库信息
+          schema:
+            $ref: '#/definitions/UpdateFitWarehouse'
+      responses:
+        '200':
+          description: 配件入库成功
+          schema:
+            $ref: '#/definitions/Resp'
+
+# 安全认证定义
+securityDefinitions:
+  jwt:
+    type: apiKey
+    in: header
+    name: Authorization
+
+# model 定义
+definitions:
+  FitWarehouse:
+    type: object
+    description: 配件入库列表
+    properties:
+      id:
+        type: string
+      # fitCode:
+      #   type: string
+      # fitName:
+      #   type: string
+      batchNo:
+        type: string
+      batchName:
+        type: string
+      stockNumber:
+        type: integer
+        format: int32
+      imgSrcs:
+        type: string
+      # fitType:
+      #   type: string
+      # isOfficial:
+      #   type: boolean
+      description:
+        type: string
+      closeStatus:
+        type: boolean
+      marketability:
+        type: boolean
+
+  PostFitWarehouse:
+    type: object
+    description: 创建入库信息
+    properties:
+      # accessoriesId:
+      #   type: string
+      fitCode:
+        type: string
+        description: 配件代码
+      fitName:
+        type: string
+        description: 配件名称
+      stockCode:
+        type: string
+        description: 库位编码
+      batchNo:
+        type: string
+        description: 批次号
+      batchName:
+        type: string
+        description: 批次名称
+      fitNumber:
+        type: integer
+        format: int32
+        description: 入库数量
+      # imgSrcs:
+      #   type: string
+      fitTypeId:
+        type: string
+        description: 配件类型id
+      isOfficial:
+        type: boolean
+        description: 是否官方
+      suitableForCar:
+        type: string
+        description: 配件可用于那些车型
+      defaultImgSrc:
+        type: string
+        description: 配件默认图片
+      description:
+        type: string
+        description: 入库备注
+  UpdateFitWarehouse:
+    type: object
+    description: 更新入库信息
+    properties:
+      accessoriesId:
+        type: string
+      batchNo:
+        type: string
+      batchName:
+        type: string
+      stockCode:
+        type: string
+        description: 库位编码
+      fitNumber:
+        type: integer
+        format: int32
+      description:
+        type: string
+
+  RespFitWarehouse:
+    type: object
+    description: 查询成功
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      rows:
+        $ref: '#/definitions/FitWarehouse'
+      count:
+        type: integer
+        format: int32
+# 操作成功
+  Resp:
+    type: object
+    description: 操作成功
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string

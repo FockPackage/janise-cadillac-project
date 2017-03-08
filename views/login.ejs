@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><%= title %></title>
+</head>
+<body>
+    <div>
+      <label for="userName">用户名</label>
+      <input name="userName" id="userName" type="text">
+    </div>
+    <div>
+      <label for="password">密码</label>
+      <input name="password" id="password" type="password">
+    </div>
+    <button id="submit">submit</button>
+    <div>
+      <span id="Bearer"></span>
+    </div>
+  <script src="js/jquery-3.1.1.min.js"></script>
+  <script>
+    $(() => {
+      $('#submit').on('click',() => {
+        const userName = $('#userName').val();
+        const password = $('#password').val();
+        const user = {
+          userName,
+          password,
+        }
+        console.log(user);
+        $.post('/login',user).then(res => {
+          console.log(res);
+          $('#Bearer').text(`Bearer ${res.authToken}`);
+        })
+      })
+    })
+  </script>
+</body>
+</html>

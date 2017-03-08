@@ -1,0 +1,193 @@
+swagger: '2.0'
+info:
+  version: 1.0.1
+  title: 凯迪拉克 api
+  description: |
+    **凯迪拉克api**
+
+    前端 财务模块 api
+
+host: '127.0.0.1:3001'
+basePath: /api/v2/finance
+tags:
+  - name: finance
+    description: 财务相关
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+security:
+  - jwt: []
+paths:
+# 查询订单
+  /getOrder:
+    get:
+      tags:
+        - finance
+      security:
+        - jwt: []
+      parameters:
+        - name: limit
+          in: query
+          description: limit
+          type: integer
+          format: int32
+        - name: offset
+          in: query
+          description: offset
+          type: integer
+          format: int32
+        - name: carRelationId
+          in: query
+          description: 车型配置信息id
+          type: string
+        - name: customName
+          in: query
+          description: 客户名称
+          type: string
+        - name: mobile
+          in: query
+          description: 电话号码
+          type: string
+        - name: orderCode
+          in: query
+          description: 合同编码
+          type: string
+        - name: date
+          in: query
+          description: '时间: YYYY-MM-DD / 时间范围: YYYY-MM-DD,YYYY-MM-DD'
+          type: string
+      responses:
+        '200':
+          description: 查询订单
+          schema:
+            title: responses
+            type: object
+            items:
+              $ref: '#/definitions/RespOrder'
+  /updateOrder/{id}:
+    put:
+      tags:
+        - finance
+      security:
+        - jwt: []
+      parameters:
+        - name: id
+          in: path
+          description: orderId
+          type: string
+          required: true
+        - name: order
+          in: body
+          description: 更新合同
+          schema:
+            $ref: '#/definitions/UpdateOrder'
+      responses:
+        '200':
+          description: 更新成功
+          schema:
+            title: responses
+            type: object
+            items:
+              $ref: '#/definitions/Resp'
+  /deleteOrder/{id}:
+    delete:
+      tags:
+        - finance
+      security:
+        - jwt: []
+      parameters:
+        - name: id
+          in: path
+          description: order
+          type: string
+          required: true
+      responses:
+        '200':
+          description: 删除成功
+          schema:
+            title: responses
+            type: object
+            items:
+              $ref: '#/definitions/Resp'
+
+# 安全认证定义
+securityDefinitions:
+  jwt:
+    type: apiKey
+    in: header
+    name: Authorization
+
+# model 定义
+definitions:
+ # 订单
+  Order:
+    type: object
+    description: 订单
+    properties:
+      id:
+        type: string
+      orderCode:
+        type: string
+      carIndentify:
+        type: string
+      customId:
+        type: string
+      custom:
+        $ref: '#/definitions/Custom'
+      carPrice:
+        type: number
+        format: float
+      fitPrice:
+        type: number
+        format: float
+      isInsurance:
+        type: boolean
+      insurancePrice:
+        type: number
+        format: float
+      isLoanPrice:
+        type: boolean
+      loanPrice:
+        type: number
+        format: float
+      outStockFee:
+        type: number
+        format: float
+      manangerId:
+        type: string
+      saleId:
+        type: string
+      description:
+        type: string
+  UpdateOrder:
+    type: object
+    description: 财务处理合同
+    properties:
+      deposit:
+        type: number
+        format: float
+      dePostitDate:
+        type: string
+        description: YYYY-MM-DD
+      paymentDate:
+        type: string
+        description: YYY-MM-DD
+      description:
+        type: string
+  RespOrder:
+    type: object
+    description: 返回
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      rows:
+        $ref: '#/definitions/Order'
+      count:
+        type: integer
+        format: int32

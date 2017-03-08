@@ -1,0 +1,740 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: 凯迪拉克
+  description: |
+    **凯迪拉克**
+    组织管理 restful api
+
+host: "192.168.0.208:3001"
+basePath: /api
+tags:
+  - name: adUser
+    description: 用户管理
+  - name: adCompany
+    description: 公司管理
+  - name: adRole
+    description: 角色管理
+  - name: adModule
+    description: 模块管理
+  - name: vqValue
+    description: 分类(字典)
+  - name: vqValueSet
+    description: 字典集
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+# AdUser 用户
+  /AdUser:
+    get:
+      tags:
+        - adUser
+      parameters:
+        - name: limit
+          in: query
+          description: limit
+          type: integer
+          format: int32
+        - name: offset
+          in: query
+          description: offset
+          type: integer
+          format: int32
+        - name: userName
+          in: query
+          description: userName
+          type: string
+        - name: name
+          in: query
+          description: name
+          type: string
+        - name: branch
+          in: query
+          description: branch
+          type: string
+        - name: mobile
+          in: query
+          description: mobile
+          type: string
+        - name: userEmail
+          in: query
+          description: userEmail
+          type: string
+      responses:
+        200:
+          description:  find the adUsers
+          schema:
+            title: Resp
+            type: object
+            items:
+              $ref: '#/definitions/Resp'
+    post:
+      tags:
+        - adUser
+      parameters:
+        - name: adUser
+          in: body
+          description: The adUser JSON you want to post
+          schema:
+            $ref: '#/definitions/AdUser'
+          required: true
+      responses:
+        200:
+          description: Make a new adUser
+  /adUser/{id}:
+    get:
+      tags:
+        - adUser
+      parameters:
+        - name: id
+          in: path
+          type: string
+          description: ID of the adUser
+          required: true
+      responses:
+        200:
+          description: find the adUser with adUser Id
+    put:
+      tags:
+        - adUser
+      parameters:
+        - name: id
+          in: path
+          type: string
+          description: ID of the adUser
+          required: true
+        - name: adUser
+          in: body
+          description: The adUser JSON you want to post
+          schema:
+            $ref: '#/definitions/AdUser'
+          required: true
+      responses:
+        200:
+          description: Updates the adUser
+    delete:
+      tags:
+        - adUser
+      parameters:
+        - name: id
+          in: path
+          type: string
+          description: ID of the adUser
+          required: true
+      responses:
+        200:
+          description: delete the adUser with adUser Id
+
+# 公司管理
+  /AdCompany:
+    get:
+      tags:
+        - adCompany
+      parameters:
+        - name: limit
+          in: query
+          description: limit
+          type: integer
+          format: int32
+        - name: offset
+          in: query
+          description: offset
+          type: integer
+          format: int32
+        - name: companyCode
+          in: query
+          description: comapnyCode
+          type: string
+        - name: companyName
+          in: query
+          description: companyName
+          type: string
+
+      responses:
+        200:
+          description:  find the adCompany
+          schema:
+            title: Resp
+            type: object
+            items:
+              $ref: '#/definitions/Resp'
+    post:
+      tags:
+        - adCompany
+      parameters:
+        - name: adCompany
+          in: body
+          description: The adCompany JSON you want to post
+          schema:
+            $ref: '#/definitions/AdCompany'
+          required: true
+      responses:
+        200:
+          description: Make a new adCompany
+  /AdCompany/{id}:
+    get:
+      tags:
+        - adCompany
+      parameters:
+        - name: id
+          in: path
+          type: string
+          description: ID of the adCompany
+          required: true
+      responses:
+        200:
+          description: find the adCompany with adCompany Id
+    put:
+      tags:
+        - adCompany
+      parameters:
+        - name: id
+          in: path
+          type: string
+          description: ID of the AdCompany
+          required: true
+        - name: adCompany
+          in: body
+          description: The adCompany JSON you want to post
+          schema:
+            $ref: '#/definitions/AdCompany'
+          required: true
+      responses:
+        200:
+          description: Updates the adCompany
+    delete:
+      tags:
+        - adCompany
+      parameters:
+        - name: id
+          in: path
+          type: string
+          description: ID of the adCompany
+          required: true
+      responses:
+        200:
+          description: delete the adCompany with adCompany Id
+
+
+# 角色管理
+  /AdRole:
+    get:
+      tags:
+        - adRole
+      parameters:
+        - name: limit
+          in: query
+          description: limit
+          type: integer
+          format: int32
+        - name: offset
+          in: query
+          description: offset
+          type: integer
+          format: int32
+        - name: roleName
+          in: query
+          description: roleName
+          type: string
+        - name: roleType
+          in: query
+          description: roleType
+          type: integer
+          format: int32
+
+      responses:
+        200:
+          description:  find the adRole
+          schema:
+            title: Resp
+            type: object
+            items:
+              $ref: '#/definitions/Resp'
+    post:
+      tags:
+        - adRole
+      parameters:
+        - name: adRole
+          in: body
+          description: The adRole JSON you want to post
+          schema:
+            $ref: '#/definitions/AdRole'
+          required: true
+      responses:
+        200:
+          description: Make a new adRole
+  /AdRole/{id}:
+    get:
+      tags:
+        - adRole
+      parameters:
+        - name: id
+          in: path
+          type: string
+          description: ID of the adRole
+          required: true
+      responses:
+        200:
+          description: find the adRole with adRole Id
+    put:
+      tags:
+        - adRole
+      parameters:
+        - name: id
+          in: path
+          type: string
+          description: ID of the adRole
+          required: true
+        - name: AdRole
+          in: body
+          description: The adRole JSON you want to post
+          schema:
+            $ref: '#/definitions/AdRole'
+          required: true
+      responses:
+        200:
+          description: Updates the adRole
+    delete:
+      tags:
+        - adRole
+      parameters:
+        - name: id
+          in: path
+          type: string
+          description: ID of the adRole
+          required: true
+      responses:
+        200:
+          description: delete the adRole with adRole Id
+
+# 模块管理
+  /AdModule:
+    get:
+      tags:
+        - adModule
+      parameters:
+        - name: limit
+          in: query
+          description: limit
+          type: integer
+          format: int32
+        - name: offset
+          in: query
+          description: offset
+          type: integer
+          format: int32
+
+      responses:
+        200:
+          description:  find the adModules
+          schema:
+            title: Resp
+            type: object
+            items:
+              $ref: '#/definitions/Resp'
+    post:
+      tags:
+        - adModule
+      parameters:
+        - name: adModule
+          in: body
+          description: The adModule JSON you want to post
+          schema:
+            $ref: '#/definitions/AdModule'
+          required: true
+      responses:
+        200:
+          description: Make a new adModule
+  /adModule/{id}:
+    get:
+      tags:
+        - adModule
+      parameters:
+        - name: id
+          in: path
+          type: string
+          description: ID of the adModule
+          required: true
+      responses:
+        200:
+          description: find the adModule with adModule Id
+    put:
+      tags:
+        - adModule
+      parameters:
+        - name: id
+          in: path
+          type: string
+          description: ID of the adModule
+          required: true
+        - name: adModule
+          in: body
+          description: The adModule JSON you want to post
+          schema:
+            $ref: '#/definitions/AdModule'
+          required: true
+      responses:
+        200:
+          description: Updates the adModule
+    delete:
+      tags:
+        - adModule
+      parameters:
+        - name: id
+          in: path
+          type: string
+          description: ID of the adModule
+          required: true
+      responses:
+        200:
+          description: delete the adModule with adModule Id
+
+# VqValueSet 分类
+  /VqValueSet:
+    get:
+      tags:
+        - vqValueSet
+      parameters:
+        - name: limit
+          in: query
+          description: limit
+          type: integer
+          format: int32
+        - name: offset
+          in: query
+          description: offset
+          type: integer
+          format: int32
+        - name: valueSetName
+          in: query
+          description: valueSetName
+          type: string
+      responses:
+        200:
+          description:  find the vqValueSets
+          schema:
+            title: Resp
+            type: object
+            items:
+              $ref: '#/definitions/Resp'
+    post:
+      tags:
+        - vqValueSet
+      parameters:
+        - name: vqValueSet
+          in: body
+          description: The vqValueSet JSON you want to post
+          schema:
+            $ref: '#/definitions/VqValueSet'
+          required: true
+      responses:
+        200:
+          description: Make a new vqValueSet
+  /VqValueSet/{id}:
+    get:
+      tags:
+        - vqValueSet
+      parameters:
+        - name: id
+          in: path
+          type: string
+          description: ID of the vqValueSet
+          required: true
+      responses:
+        200:
+          description: find the vqValueSet with vqValueSet Id
+    put:
+      tags:
+        - vqValueSet
+      parameters:
+        - name: id
+          in: path
+          type: string
+          description: ID of the VqValueSet
+          required: true
+        - name: vqValueSet
+          in: body
+          description: The vqValueSet JSON you want to post
+          schema:
+            $ref: '#/definitions/VqValueSet'
+          required: true
+      responses:
+        200:
+          description: Updates the vqValueSet
+    delete:
+      tags:
+        - vqValueSet
+      parameters:
+        - name: id
+          in: path
+          type: string
+          description: ID of the vqValueSet
+          required: true
+      responses:
+        200:
+          description: delete the vqValueSet with vqValueSet Id
+
+# VqValue 选项
+  /VqValue:
+    get:
+      tags:
+        - vqValue
+      parameters:
+        - name: limit
+          in: query
+          description: limit
+          type: integer
+          format: int32
+        - name: offset
+          in: query
+          description: offset
+          type: integer
+          format: int32
+        - name: value
+          in: query
+          description: value
+          type: string
+        - name: meaning
+          in: query
+          description: meaning
+          type: string
+        - name: valueSetID
+          in: query
+          description: valueSetID
+          type: string
+        - name: startDateActive
+          in: query
+          description: startDateActive
+          type: string
+        - name: endDateActive
+          in: query
+          description: endDateActive
+          type: string
+      responses:
+        200:
+          description:  find the vqValue
+          schema:
+            title: Resp
+            type: object
+            items:
+              $ref: '#/definitions/Resp'
+    post:
+      tags:
+        - vqValue
+      parameters:
+        - name: vqValue
+          in: body
+          description: The vqValue JSON you want to post
+          schema:
+            $ref: '#/definitions/VqValue'
+          required: true
+      responses:
+        200:
+          description: Make a new vqValue
+
+  /VqValue/{id}:
+    get:
+      tags:
+      - vqValue
+      parameters:
+        - name: id
+          in: path
+          type: string
+          description: ID of the vqValue
+          required: true
+      responses:
+        200:
+          description: find the vqValue with vqValue Id
+    put:
+      tags:
+        - vqValue
+      parameters:
+        - name: id
+          in: path
+          type: string
+          description: ID of the vqValue
+          required: true
+        - name: vqValue
+          in: body
+          description: The vqValue JSON you want to post
+          schema:
+            $ref: '#/definitions/VqValue'
+          required: true
+      responses:
+        200:
+          description: Updates the vqValue
+    delete:
+      tags:
+        - vqValue
+      parameters:
+        - name: id
+          in: path
+          type: string
+          description: ID of the vqValue
+          required: true
+      responses:
+        200:
+          description: delete the vqValue with vqValue Id
+
+# 描述
+definitions:
+# 用户
+  AdUser:
+    type: object
+    properties:
+      userNumber:
+        type: string
+      userName:
+        type: string
+      password:
+        type: string
+      userType:
+        type: integer
+        format: int32
+      name:
+        type: string
+      branch:
+        type: string
+      phone:
+        type: string
+      mobile:
+        type: string
+      mobileStatus:
+        type: integer
+        format: int32
+      userEmail:
+        type: string
+      emailStatus:
+        type: integer
+        format: int32
+      enableFlag:
+        type: string
+      roleIDs:
+        type: string
+      companyIDs:
+        type: string
+      portrait:
+        type: string
+
+#公司管理
+  AdCompany:
+    type: object
+    properties:
+      optimisticLockField:
+        type: integer
+        format: int32
+      parentID:
+        type: string
+      companyCode:
+        type: string
+      companyName:
+        type: string
+      description:
+        type: string
+      isShow:
+        type: boolean
+      sortNo:
+        type: integer
+        format: int32
+
+# 角色管理
+  AdRole:
+    type: object
+    properties:
+      roleName:
+        type: string
+      moduleButtons:
+        type: string
+      categories:
+        type: string
+      description:
+        type: string
+      sort:
+        type: integer
+        format: int32
+      valueGID:
+        type: string
+      roleType:
+        type: integer
+        format: int32
+      optimisticLockField:
+        type: integer
+        format: int32
+      defaultPage:
+        type: string
+
+# 模块管理
+  AdModule:
+    type: object
+    properties:
+      optimisticLockField:
+        type: integer
+        format: int32
+      parentID:
+        type: string
+      moduleButtonName:
+        type: string
+      moduleButtonCode:
+        type: string
+      description:
+        type: string
+      isShow:
+        type: boolean
+      isLeaf:
+        type: string
+      sortNo:
+        type: integer
+        format: int32
+
+# 分类
+  VqValueSet:
+    type: object
+    properties:
+      valueSetName:
+        type: string
+      setDesc:
+        type: string
+      code:
+        type: string
+
+# 选项
+  VqValue:
+    type: object
+    properties:
+      value:
+        type: string
+      meaning:
+        type: string
+      description:
+        type: string
+      valueSetID:
+        type: string
+      enableFlag:
+        type: string
+      startDateActive:
+        type: string
+        format: dateTime
+      endDateActive:
+        type: string
+        format: dateTime
+
+# 返回信息
+  Resp:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      row:
+        type: object
+      rows:
+        type: object
+      count:
+        type: integer
+        format: int32

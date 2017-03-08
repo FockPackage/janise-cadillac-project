@@ -1,0 +1,189 @@
+swagger: '2.0'
+info:
+  version: 1.0.1
+  title: 凯迪拉克 api
+  description: |
+    **凯迪拉克api**
+
+    前端 车辆入库模块 api
+
+host: '192.168.0.172:3001'
+basePath: /api/v2/carWarehouse
+tags:
+  - name: carWarehouse
+    description: 入库
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+security:
+  - jwt: []
+paths:
+# 查询入库信息
+  /getCarWarehouse:
+    get:
+      tags:
+        - car
+      security:
+        - jwt: []
+      parameters:
+        - name: limit
+          in: query
+          description: limit
+          type: integer
+          format: int32
+        - name: offset
+          in: query
+          description: offset
+          type: integer
+          format: int32
+        - name: carIdentify
+          in: query
+          description: 车辆唯一识别码
+          type: string
+        - name: carType
+          in: query
+          description: 车型
+        - name: carRelationId
+          in: query
+          description: 车型配置...id
+          type: string
+        - name: date
+          in: query
+          description: '时间: YYYY-MM-DD / 时间范围: YYYY-MM-DD,YYYY-MM-DD'
+          type: string
+      responses:
+        '200':
+          description: 查询所有车辆库存信息
+          schema:
+            title: responses
+            type: object
+            items:
+              $ref: '#/definitions/RespCarWarehouse'
+  /postCarWarehouse:
+    post:
+      tags:
+        - car
+      security:
+        - jwt: []
+      parameters:
+        - name: carWarehouse
+          in: body
+          description: 车辆入库信息
+          schema:
+            $ref: '#/definitions/PostCarWarehouse'
+      responses:
+        '200':
+          description: 创建入库成功
+          schema:
+            $ref: '#/definitions/Resp'
+
+  /updateCarWarehouse/{id}:
+    put:
+      tags:
+        - car
+      security:
+        - jwt: []
+      parameters:
+        - name: id
+          in: path
+          description: carWarehouseId
+          type: string
+          required: true
+        - name: carWarehouse
+          in: body
+          description: 车辆入库信息
+          schema:
+            $ref: '#/definitions/UpdateCarWarehouse'
+      responses:
+        '200':
+          description: 更新入库成功
+          schema:
+            $ref: '#/definitions/Resp'
+
+# 安全认证定义
+securityDefinitions:
+  jwt:
+    type: apiKey
+    in: header
+    name: Authorization
+
+# model 定义
+definitions:
+  CarWarehouse:
+    type: object
+    description: 车辆入库列表
+    properties:
+      id:
+        type: string
+      carIdentify:
+        type: string
+      callCarStore:
+        type: string
+      callCarDate:
+        type: string
+      existCarStore:
+        type: string
+      closeStatus:
+        type: boolean
+      stockStatus:
+        type: boolean
+      allocateDate:
+        type: string
+        format: date-time
+      imgSrcs:
+        type: string
+      description:
+        type: string
+
+  PostCarWarehouse:
+    type: object
+    description: 创建入库信息
+    properties:
+      carRelationId:
+        type: string
+      carIdentify:
+        type: string
+      imgSrcs:
+        type: string
+      description:
+        type: string
+  UpdateCarWarehouse:
+    type: object
+    description: 更新入库信息
+    properties:
+      carRelationId:
+        type: string
+      carIdentify:
+        type: string
+      imgSrcs:
+        type: string
+      description:
+        type: string
+
+  RespCarWarehouse:
+    type: object
+    description: 查询成功
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      rows:
+        $ref: '#/definitions/CarWarehouse'
+      count:
+        type: integer
+        format: int32
+# 操作成功
+  Resp:
+    type: object
+    description: 操作成功
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string

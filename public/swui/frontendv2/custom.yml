@@ -1,0 +1,203 @@
+swagger: '2.0'
+info:
+  version: 1.0.1
+  title: 凯迪拉克 api
+  description: |
+    **凯迪拉克api**
+
+    前端 客户模块 api
+
+host: '192.168.0.172:3001'
+basePath: /api/v2/custom
+tags:
+  - name: custom
+    description: 客户
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+security:
+  - jwt: []
+paths:
+  # 客户
+  /getCustom:
+    get:
+      tags:
+        - custom
+      security:
+        - jwt: []
+      parameters:
+        - name: limit
+          in: query
+          type: integer
+          format: int32
+        - name: offset
+          in: query
+          type: integer
+          format: int32
+        - name: customName
+          in: query
+          type: string
+        - name: mobile
+          in: query
+          type: string
+      responses:
+        '200':
+          description: 查询用户
+          schema:
+            title: responses
+            type: object
+            items:
+              $ref: '#/definitions/RespCustom'
+
+  /postCustom:
+    post:
+      tags:
+        - custom
+      security:
+        - jwt: []
+      parameters:
+        - name: custom
+          in: body
+          description: 客户
+          schema:
+            $ref: '#/definitions/Custom'
+      responses:
+        '200':
+          description: 创建新客户
+          schema:
+            title: responses
+            type: object
+            items:
+              $ref: '#/definitions/Resp'
+        '428':
+          description: 创建失败，已经有客户信息
+          schema:
+            title: responses
+            type: object
+            items:
+              $ref: '#/definitions/Resp428'
+  /updateCustom/{id}:
+    put:
+      tags:
+        - custom
+      security:
+        - jwt: []
+      parameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+        - name: custom
+          in: body
+          description: 客户
+          schema:
+            $ref: '#/definitions/Custom'
+      responses:
+        '200':
+          description: 更新客户
+          schema:
+            title: responses
+            type: object
+            items:
+              $ref: '#/definitions/Resp'
+  /deleteCustom/{id}:
+    delete:
+      tags:
+        - custom
+      security:
+        - jwt: []
+      parameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+      responses:
+        '200':
+          description: 删除客户
+          schema:
+            title: responses
+            type: object
+            items:
+              $ref: '#/definitions/Resp'
+# 安全认证定义
+securityDefinitions:
+  jwt:
+    type: apiKey
+    in: header
+    name: Authorization
+
+# model 定义
+definitions:
+# 客户信息
+  Custom:
+    type: object
+    # required:
+    #   - customName
+    #   - mobile
+    properties:
+      id:
+        type: string
+      customName:
+        type: string
+      age:
+        type: integer
+        format: int32
+      sex:
+        type: string
+      address:
+        type: string
+      company:
+        type: string
+      IDNumber:
+        type: string
+      postal:
+        type: string
+      birthday:
+        type: string
+      mobile:
+        type: string
+      weixin:
+        type: string
+      email:
+        type: string
+      isSendMail:
+        type: boolean
+      description:
+        type: string
+  RespCustom:
+    type: object
+    description: 操作成功
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      rows:
+        $ref: '#/definitions/Custom'
+
+  Resp428:
+    type: object
+    description: 创建失败
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      row:
+        $ref: '#/definitions/Custom'
+
+# 操作成功
+  Resp:
+    type: object
+    description: 操作成功
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string

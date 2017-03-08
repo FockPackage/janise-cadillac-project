@@ -1,0 +1,206 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: 凯迪拉克
+  description: |
+    **凯迪拉克**
+    业务 restful api
+
+host: "192.168.0.208:3001"
+basePath: /api
+tags:
+  - name: carColorRelation
+    description: 车系车型颜色
+  - name: carFitRelation
+    description: 车系车型配件
+  - name: carHubRelation
+    description: 车系车型轮毂
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+security:
+  - jwt: []
+paths:
+# 车系车型颜色
+  /CarColorRelation:
+    get:
+      tags:
+        - carColorRelation
+      security:
+        - jwt: []
+      parameters:
+        - name: limit
+          in: query
+          description: limit
+          type: integer
+          format: int32
+        - name: offset
+          in: query
+          description: offset
+          type: integer
+          format: int32
+        - name: carInsideColorID
+          in: query
+          description: 内饰颜色ID
+          type: string
+        - name: carOutsideColorID
+          in: query
+          description: 车身颜色ID
+          type: string
+        - name: carTypeID
+          in: query
+          description: 车系id
+          type: string
+        - name: carCodeID
+          in: query
+          description: 车型id
+          type: string
+        - name: carYearID
+          in: query
+          description: 年份ID
+          type: string
+        - name: carDisplaceID
+          in: query
+          description: 排量ID
+          type: string
+        - name: companyID
+          in: query
+          description: 分公司ID
+          type: string
+      responses:
+        200:
+          description: 查询 车系车型颜色
+          schema:
+            title: Resp
+            type: object
+            items:
+              $ref: '#/definitions/Resp'
+    post:
+      tags:
+        - carColorRelation
+      parameters:
+        - name: carColorRelation
+          in: body
+          description: 添加新的 车系车系颜色记录
+          schema:
+            $ref: '#/definitions/CarColorRelation'
+          required: true
+      responses:
+        200:
+          description: 添加新的 车系车系颜色记录 成功
+  /CarColorRelation/{id}:
+    get:
+      tags:
+        - carColorRelation
+      parameters:
+        - name: id
+          in: path
+          type: string
+          description: 车系车型颜色记录的ID
+          required: true
+      responses:
+        200:
+          description: 根据id查询 车系车型颜色记录 成功
+    put:
+      tags:
+        - carColorRelation
+      parameters:
+        - name: id
+          in: path
+          type: string
+          description: 车系车型颜色记录的ID
+          required: true
+        - name: carColorRelation
+          in: body
+          description: 车系车型颜色记录 json
+          schema:
+            $ref: '#/definitions/CarColorRelation'
+      responses:
+        200:
+          description: 更新 记录
+    delete:
+      tags:
+        - carColorRelation
+      parameters:
+        - name: id
+          in: path
+          type: string
+          description: 车系车型颜色记录 ID
+          required: true
+      responses:
+        200:
+          description: 删除 记录
+
+# 安全认证定义
+securityDefinitions:
+  jwt:
+    type: apiKey
+    in: header
+    name: Authorization
+
+# model定义
+definitions:
+# 车系车型颜色
+  CarColorRelation:
+    type: object
+    properties:
+      carInsideColorID:
+        type: string
+      carInsideColorValue:
+        type: string
+      carInsideColorMean:
+        type: string
+      carOutsideColorID:
+        type: string
+      carOutsideColor:
+        type: string
+      carOutsideColorMean:
+        type: string
+      carTypeID:
+        type: string
+      carTypeValue:
+        type: string
+      carTypeMean:
+        type: string
+      carCodeID:
+        type: string
+      carCodeValue:
+        type: string
+      carCodeMean:
+        type: string
+      carYearID:
+        type: string
+      carYearValue:
+        type: string
+      carYearMean:
+        type: string
+      carDisplaceID:
+        type: string
+      carDisplaceValue:
+        type: string
+      carDisplaceMean:
+        type: string
+      companyID:
+        type: string
+      description:
+        type: string
+
+# 返回信息
+  Resp:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      row:
+        type: object
+      rows:
+        type: object
+      count:
+        type: integer
+        format: int32

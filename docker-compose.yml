@@ -1,0 +1,26 @@
+db1:
+  image: mysql:5.6
+  environment:
+    - MYSQL_ROOT_PASSWORD=123456
+  volumes:
+    - C:\develop\docker\mysql\data:/var/lib/mysql
+  expose:
+    - 3306
+  ports:
+    - "3306:3306"
+
+# redis1:
+#   image: redis
+#   expose:
+#     - 6379
+#   ports:
+#     - "6379:6379"
+
+# node1:
+#   image: node-cadillac:latest
+#   links:
+#     - db1
+#   expose:
+#     - 3000
+#   ports:
+#     - "3000:3000"

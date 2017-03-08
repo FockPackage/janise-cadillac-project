@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Document</title>
+  <!-- 新 Bootstrap 核心 CSS 文件 -->
+  <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+
+  <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+  <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
+
+  <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+  <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+
+  <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+  <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+  <div class="container-fluid">
+    <!--创建-->
+    <div class="row">
+      <h3>创建</h3>
+      <div class="col-md-12">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>配件代码</th>
+              <th>中文名称</th>
+              <th>配件类型</th>
+              <th>适合车型</th>
+              <th>是否官方</th>
+              <th>备注</th>
+              <th>含税成本价</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>
+                <div class="form-group">
+                  <label class="sr-only" for="fitCode"></label>
+                  <input class="form-control" id="fitCode" type="text">
+                </div>
+              </th>
+              <th>
+                <div class="form-group">
+                  <label for="fitName" class="sr-only">
+                    </label>
+                  <input type="text" class="form-control" id="fitName">
+                </div>
+              </th>
+              <th style="min-width: 124px">
+                <div class="form-group">
+                  <select name="fitType" id="fitType" class="form-control"></select>
+                </div>
+              </th>
+              <th>
+                <div class="form-group">
+                  <input class="form-control" id="suitableForCar" type="text">
+                </div>
+              </th>
+              <th style="min-width:80px">
+                <div class="form-group">
+                  <select class="form-control" name="isOfficial" id="isOfficial">
+                    <option value="1">是</option>
+                    <option value="0">否</option>
+                  </select>
+                </div>
+              </th>
+              <th>
+                <div class="form-group">
+                  <input class="form-control" id="description" type="text">
+                </div>
+              </th>
+              <th>
+                <div class="form-group">
+                  <input class="form-control" id="costPrice" type="text">
+                </div>
+              </th>
+              <th style="min-width: 72px">
+                <div class="form-group">
+                  <button class="form-control" id="submit">提交</button>
+                </div>
+              </th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="row">
+      <h3>
+        编辑
+      </h3>
+      <div class="col-md-6">
+        <form role="form">
+          <div class="form-group">
+            <label for="updatId">id</label>
+            <input class="form-control" type="text" id="updatId">
+          </div>
+          <div class="form-group">
+            <label for="updatFitCode">配件代码</label>
+            <input class="form-control" type="text" id="updatFitCode">
+          </div>
+          <div class="form-group">
+            <label for="updatFitName">中文名称</label>
+            <input class="form-control" type="text" id="updatFitName">
+          </div>
+          <div class="form-group">
+            <label for="updatFitType">配件类型</label>
+            <select name="updatFitType" id="updatFitType" class="form-control"></select>
+          </div>
+          <div class="form-group">
+            <label for="updatSuitableForCar">适合车型</label>
+            <input class="form-control" type="text" id="updatSuitableForCar">
+          </div>
+          <div class="form-group">
+            <label for="updatIsOfficial">是否官方</label>
+            <!--<input class="form-control" type="text" id="updatIsOfficial">-->
+            <select class="form-control" name="updatIsOfficial" id="updatIsOfficial">
+              <option value="1">是</option>
+              <option value="0">否</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="updatDescription">备注</label>
+            <input class="form-control" type="text" id="updatDescription">
+          </div>
+          <div class="form-group">
+            <label for="updatCostPrice">价格</label>
+            <input class="form-control" type="text" id="updatCostPrice">
+          </div>
+        </form>
+        <button class="button" id="update">提交</button>
+      </div>
+    </div>
+
+    <!--列表-->
+    <div class="row">
+      <h3>配件列表</h3>
+      <div class="col-md-12">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>id</th>
+              <th>配件代码</th>
+              <th>中文名称</th>
+              <th>配件类型</th>
+              <th>适合车型</th>
+              <th>是否官方</th>
+              <th>备注</th>
+              <th>含税成本价</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody id="accessoriesList">
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div>
+
+  </div>
+  <script src="js/jquery-3.1.1.min.js"></script>
+  <script src="js/createAccessories.js"></script>
+</body>
+
+</html>

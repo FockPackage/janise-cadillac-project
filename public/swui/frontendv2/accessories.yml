@@ -1,0 +1,168 @@
+swagger: '2.0'
+info:
+  version: 1.0.1
+  title: 凯迪拉克 api
+  description: |
+    **凯迪拉克api**
+
+    前端 配件类型模块 api
+
+host: '127.0.0.1:3001'
+basePath: /api/v2/accessories
+tags:
+  - name: accessories
+    description: 配件类型
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+security:
+  - jwt: []
+paths:
+# 查询配件类型
+  /getAccessories:
+    get:
+      tags:
+        - accessories
+      security:
+        - jwt: []
+      parameters:
+        - name: limit
+          in: query
+          description: limit
+          type: integer
+          format: int32
+        - name: offset
+          in: query
+          description: offset
+          type: integer
+          format: int32
+        - name: fitCode
+          in: query
+          description: 配件代码
+          type: string
+        - name: fitName
+          in: query
+          description: 配件名称
+          type: string
+      responses:
+        '200':
+          description: 查询配件分类
+          schema:
+            title: responses
+            type: object
+            items:
+              $ref: '#/definitions/RespAccessories'
+  # 更新配件类型
+  /updateAccessories/{id}:
+    put:
+      tags:
+        - accessories
+      security:
+        - jwt: []
+      parameters:
+        - name: id
+          in: path
+          description: accessoriesId
+          type: string
+          required: true
+        - name: accessories
+          in: body
+          description: 配件信息
+          schema:
+            $ref: '#/definitions/UpdateAccessories'
+      responses:
+        '200':
+          description: 配件修改成功
+          schema:
+            $ref: '#/definitions/Resp'
+
+# 安全认证定义
+securityDefinitions:
+  jwt:
+    type: apiKey
+    in: header
+    name: Authorization
+
+# model 定义
+definitions:
+  Accessories:
+    type: object
+    description: 配件类型
+    properties:
+      id:
+        type: string
+      fitCode:
+        type: string
+      fitName:
+        type: string
+      costPrice:
+        type: number
+        format: float
+      profit:
+        type: number
+        format: float
+      defaultImgSrc:
+        type: string
+      description:
+        type: string
+      isOfficial:
+        type: boolean
+      fitTypeId:
+        type: string
+      suitableForCar:
+        type: string
+      closeStatus:
+        type: boolean
+
+# 配件分类修改
+  UpdateAccessories:
+    type: object
+    description: 配件信息
+    properties:
+      fitCode:
+        type: string
+        description: 配件代码
+      fitName:
+        type: string
+        description: 配件名称
+      fitTypeId:
+        type: string
+        description: 配件类型id
+      isOfficial:
+        type: boolean
+        description: 是否官方
+      suitableForCar:
+        type: string
+        description: 配件可用于那些车型
+      defaultImgSrc:
+        type: string
+        description: 配件默认图片
+      description:
+        type: string
+        description: 备注
+  RespAccessories:
+    type: object
+    description: 配件列表
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      rows:
+        $ref: '#/definitions/Accessories'
+      count:
+        type: integer
+# 操作成功
+  Resp:
+    type: object
+    description: 操作成功
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string

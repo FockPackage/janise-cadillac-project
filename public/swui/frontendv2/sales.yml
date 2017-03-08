@@ -1,0 +1,417 @@
+swagger: '2.0'
+info:
+  version: 1.0.1
+  title: 凯迪拉克 api
+  description: |
+    **凯迪拉克api**
+
+    前端 销售模块 api
+
+host: '192.168.0.172:3001'
+basePath: /api/v2/
+tags:
+  - name: carRelation
+    description: 车型车系内饰外饰颜色...等列表
+  - name: carType
+    description: 车型
+  - name: carYear
+    description: 年份
+  - name: carInsideColor
+    description: 内饰颜色
+  - name: carOutsideColor
+    description: 外饰颜色
+  - name: carDisplace
+    description: 排量
+  - name: carHub
+    description: 轮毂
+  - name: accessories
+    description: 配件类型列表
+  - name: insurance
+    description: 保险信息
+  - name: carRepertory
+    description: 车辆库存信息
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+security:
+  - jwt: []
+paths:
+  # 车型
+  /classify/getCarType:
+    get:
+      tags:
+        - carType
+      security:
+        - jwt: []
+      responses:
+        '200':
+          description: 查询所有车辆类型
+          schema:
+            title: responses
+            type: object
+            items:
+              $ref: '#/definitions/RespVqValue'
+  # 车辆年份
+  /classify/getYear:
+    get:
+      tags:
+        - carYear
+      security:
+        - jwt: []
+      responses:
+        '200':
+          description: 查询所有年份
+          schema:
+            title: responses
+            type: object
+            items:
+              $ref: '#/definitions/RespVqValue'
+  # 车辆内饰颜色
+  /classify/getInsideColor:
+    get:
+      tags:
+        - carInsideColor
+      security:
+        - jwt: []
+      responses:
+        '200':
+          description: 查询所有车辆内饰
+          schema:
+            title: responses
+            type: object
+            items:
+              $ref: '#/definitions/RespVqValue'
+  # 车辆外饰颜色
+  /classify/getOutsideColor:
+    get:
+      tags:
+        - carOutsideColor
+      security:
+        - jwt: []
+      responses:
+        '200':
+          description: 查询所有车辆外饰
+          schema:
+            title: responses
+            type: object
+            items:
+              $ref: '#/definitions/RespVqValue'
+  # 车辆排量
+  /classify/getDisplace:
+    get:
+      tags:
+        - carDisplace
+      security:
+        - jwt: []
+      responses:
+        '200':
+          description: 查询所有车辆排量
+          schema:
+            title: responses
+            type: object
+            items:
+              $ref: '#/definitions/RespVqValue'
+  # 车辆轮毂
+  /classify/getHub:
+    get:
+      tags:
+        - carHub
+      security:
+        - jwt: []
+      responses:
+        '200':
+          description: 查询所有车辆轮毂
+          schema:
+            title: responses
+            type: object
+            items:
+              $ref: '#/definitions/RespVqValue'
+  # 配件
+  /sales/getAccessories:
+    get:
+      tags:
+        - accessories
+      security:
+        - jwt: []
+      responses:
+        '200':
+          description: 查询所有配件类型
+          schema:
+            title: responses
+            type: object
+            items:
+              $ref: '#/definitions/RespAccessories'
+  # 车辆所有类型
+  /sales/getCarRelation:
+    get:
+      tags:
+        - carRelation
+      security:
+        - jwt: []
+      parameters:
+        - name: limit
+          in: query
+          description: limit
+          type: integer
+          format: int32
+        - name: offset
+          in: query
+          description: offset
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: 查询车辆车型配置....等列表
+          schema:
+            title: carRelation
+            type: object
+            items:
+              $ref: '#/definitions/RespCarRelation'
+  # 保险
+  /sales/getInsurance:
+    get:
+      tags:
+        - insurance
+      security:
+        - jwt: []
+      responses:
+        '200':
+          description: 查询所有保险信息
+          schema:
+            title: responses
+            type: object
+            items:
+              $ref: '#/definitions/RespInsurance'
+  # 车辆库存
+  /getCarRepertory:
+    get:
+      tags:
+        - carRepertory
+      security:
+        - jwt: []
+      parameters:
+        - name: limit
+          in: query
+          description: limit
+          type: integer
+          format: int32
+        - name: offset
+          in: query
+          description: offset
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: 查询车辆库存表
+          schema:
+            title: responses
+            type: object
+            items:
+              $ref: '#/definitions/RespCarRepertory'
+# 安全认证定义
+securityDefinitions:
+  jwt:
+    type: apiKey
+    in: header
+    name: Authorization
+
+# model定义
+definitions:
+# 分类
+  VqValue:
+    type: object
+    properties:
+      value:
+        type: string
+      meaning:
+        type: string
+      description:
+        type: string
+  RespVqValue:
+    type: object
+    description: 返回
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      rows:
+        $ref: "#/definitions/VqValue"
+      count:
+        type: integer
+        format: int32
+# 车系车型颜色
+  CarRelation:
+    type: object
+    description: 车型车型颜色....列表
+    properties:
+      carInsideColorID:
+        type: string
+      carInsideColorValue:
+        type: string
+      carInsideColorMean:
+        type: string
+      carOutsideColorID:
+        type: string
+      carOutsideColor:
+        type: string
+      carOutsideColorMean:
+        type: string
+      carTypeID:
+        type: string
+      carTypeValue:
+        type: string
+      carTypeMean:
+        type: string
+      carCodeID:
+        type: string
+      carCodeValue:
+        type: string
+      carCodeMean:
+        type: string
+      carYearID:
+        type: string
+      carYearValue:
+        type: string
+      carYearMean:
+        type: string
+      carDisplaceID:
+        type: string
+      carDisplaceValue:
+        type: string
+      carDisplaceMean:
+        type: string
+      companyID:
+        type: string
+      description:
+        type: string
+  RespCarRelation:
+    type: object
+    description: 返回
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      rows:
+        $ref: "#/definitions/CarRelation"
+      count:
+        type: integer
+        format: int32
+# 保险
+  Insurance:
+    type: object
+    description: 返回
+    properties:
+      id:
+        type: string
+      insuranceCompany:
+        type: string
+      insurancePrice:
+        type: number
+        format: float
+      loanPrice:
+        type: number
+        format: float
+      description:
+        type: string
+  RespInsurance:
+    type: object
+    description: 返回
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      rows:
+        $ref: '#/definitions/Insurance'
+# 配件类型
+  Accessories:
+    type: object
+    description: 配件类型
+    properties:
+      id:
+        type: string
+  RespAccessories:
+    type: object
+    description: 返回
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      rows:
+        $ref: '#/definitions/Accessories'
+  CarRepertory:
+    type: object
+    description: 车辆可出口库存
+    properties:
+      id:
+        type: string
+      carIdentify:
+        type: string
+      carPrice1:
+        type: number
+        format: float
+      carPrice2:
+        type: number
+        format: float
+      carPrice3:
+        type: number
+        format: float
+      callCarStore:
+        type: string
+      callCarDate:
+        type: string
+      existCarStore:
+        type: string
+      isPromotion:
+        type: boolean
+      promotionPrice:
+        type: number
+        format: float
+      promotionComm:
+        type: number
+        format: float
+      imgSrcs:
+        type: string
+      description:
+        type: string
+  RespCarRepertory:
+    type: object
+    description: 返回
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      rows:
+        $ref: '#/definitions/CarRepertory'
+      count:
+        type: integer
+        format: int32
+# 返回信息
+  # Resp:
+  #   type: object
+  #   description: 返回
+  #   properties:
+  #     code:
+  #       type: integer
+  #       format: int32
+  #     message:
+  #       type: string
+  #     row:
+  #       type: object
+  #     rows:
+  #       type: object
+  #     count:
+  #       type: integer
+  #       format: int32
